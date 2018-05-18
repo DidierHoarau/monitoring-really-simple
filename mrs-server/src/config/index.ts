@@ -5,12 +5,12 @@ const CONFIG_FILE = `${__dirname}/config-${process.env.NODE_ENV || 'default'}.js
 class Config {
   //
   public readonly API_PATH: string = '/api';
-  public foo: string = `bar`;
+  public eventsDbHost: string = 'http://mrs-events-db:5984';
 
   public constructor() {
     const content = JSON.parse(fs.readFileSync(CONFIG_FILE, 'utf8'));
-    if (content.foo) {
-      this.foo = content.foo;
+    if (content.eventsDbHost) {
+      this.eventsDbHost = content.eventsDbHost;
     }
   }
 }

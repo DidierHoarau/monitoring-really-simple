@@ -1,9 +1,9 @@
 import { config } from '../config';
-import { exampleGetRouter } from './example-get';
-import { examplePostRouter } from './example-post';
+import { eventsGetRouter } from './events-get';
+import { eventsPostRouter } from './events-post';
 import { ExpressWrapper } from './utils/express-wrapper';
 
 export const router = ExpressWrapper.createRouter();
 
-router.use(`${config.API_PATH}/example/`, exampleGetRouter);
-router.use(`${config.API_PATH}/example/`, examplePostRouter);
+router.use(`${config.API_PATH}/events/`, eventsGetRouter);
+router.use(`${config.API_PATH}/events/`, eventsPostRouter);
