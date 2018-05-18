@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+
+  couchdb:
+    image: apache/couchdb
+    ports:
+      - 5984:5984
+    networks:
+      monitoring-network:
+        aliases:
+          - mrs-events-db
+
+networks:
+  monitoring-network:
+    external: true

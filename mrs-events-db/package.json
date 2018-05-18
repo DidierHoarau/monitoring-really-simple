@@ -1,0 +1,15 @@
+{
+  "name": "mrs-events-db",
+  "version": "0.1.0",
+  "scripts": {
+    "packaging:init": "chmod +x docker-packaging-config/*.sh && docker-packaging-config/init.sh",
+    "//": "-------------------------------------------------------------------",
+    "packaging:prepare": "docker-packaging/prepare.sh",
+    "packaging:image-build": "docker-packaging/image-build.sh",
+    "packaging:image-push": "docker-packaging/image-push.sh",
+    "packaging:service-deploy": "docker-packaging/service-deploy.sh",
+    "packaging:service-run": "docker-packaging/service-run.sh"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}
