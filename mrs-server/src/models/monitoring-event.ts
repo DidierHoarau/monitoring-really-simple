@@ -20,8 +20,6 @@ export class MonitoringEvent {
     setIfSet('origin', 'unknown_origin');
     setIfSet('level', MonitoringLevel.info);
   }
-
-  public validateFormat(): void {}
 }
 
 enum MonitoringLevel {

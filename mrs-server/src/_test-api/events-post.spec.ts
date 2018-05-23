@@ -19,10 +19,10 @@ describe('[API] Post Events', () => {
   test('should reject an event without the required field', async done => {
     const url = `http://localhost:3000${config.API_PATH}/events/`;
     const json = {
-      wrongcontent: { a: 'b', c: 'd' },
       level: 'info',
       origin: 'api-test',
-      tags: ['test']
+      tags: ['test'],
+      wrongcontent: { a: 'b', c: 'd' }
     };
     await Timeout.wait(100);
     await HttpTools.post({ json, url })

@@ -1,21 +1,19 @@
+import * as _ from 'lodash';
 import * as Nano from 'nano';
 import { config } from '../config/';
-import * as _ from 'lodash';
 import { MonitoringEvent } from '../models/monitoring-event';
 import * as logger from '../utils/logger';
 
 const nano = Nano({
-  url: config.eventsDbHost,
   requestDefaults: {
     pool: {
       maxSockets: 3
     }
-  }
+  },
+  url: config.eventsDbHost
 });
 nano.db.create('mrs-events');
 const db = nano.db.use('mrs-events');
-let eventQueue = [];
-let isProcessingEvent = false;
 
 export class EventsDb {
   //
@@ -31,7 +29,7 @@ export class EventsDb {
     });
   }
 
-  public static getEvents(limit: number) {
+  public static getEvents(limit: number): Promise<any> {
     return new Promise((resolve, reject) => {
       db.list({ include_docs: true, limit, sort: [{ date: 'desc' }] }, (error, body) => {
         if (error) {
@@ -55,8 +53,8 @@ export class EventsDb {
     return {
       content: event.content,
       date: event.date,
-      origin: event.origin,
       level: event.level,
+      origin: event.origin,
       tags: event.tags
     };
   }

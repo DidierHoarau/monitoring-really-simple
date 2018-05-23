@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response, Router } from 'express';
-import { ExpressWrapper } from './utils/express-wrapper';
 import { EventsDb } from '../utils/events-db';
 import { Logger } from '../utils/logger';
+import { ExpressWrapper } from './utils/express-wrapper';
 
 export const eventsGetRouter = ExpressWrapper.createRouter();
 
