@@ -33,11 +33,15 @@ export class EventsDb {
 
   public static getEvents(limit: number) {
     return new Promise((resolve, reject) => {
-      db.list({ include_docs: true }, (error, body) => {
+      db.list({ include_docs: true, limit, sort: [{ date: 'desc' }] }, (error, body) => {
         if (error) {
           reject(error);
         } else {
-          resolve(body.rows);
+          const eventsResult = [];
+          for (const event of body.rows) {
+            eventsResult.push(event.doc);
+          }
+          resolve(eventsResult);
         }
       });
     });
