@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ${DOCKER_REGISTRY}/mrs-web
+    labels:
+      - "discovery.service.name=example.com"
+      - "discovery.service.port=80"
+      - "discovery.service.https=y"
+    networks:
+      - webproxy-network
+    ports:
+      - 80
+
+networks:
+  webproxy-network:
+    external: true
