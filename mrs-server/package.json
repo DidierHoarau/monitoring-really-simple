@@ -2,7 +2,7 @@
   "name": "mrs-server",
   "version": "0.1.0",
   "author": "",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "scripts": {
     "packaging:init": "chmod +x docker-packaging-config/*.sh && docker-packaging-config/init.sh",
     "//": "-------------------------------------------------------------------",

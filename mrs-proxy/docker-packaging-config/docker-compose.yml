@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ${DOCKER_REGISTRY}/mrs-proxy
+    labels:
+      - "discovery.service.name=example.com"
+      - "discovery.service.port=80"
+      - "discovery.service.https=y"
+    ports:
+      - 80
+    networks:
+      webproxy-network:
+        aliases:
+          - mrs-proxy
+      monitoring-network:
+        aliases:
+          - mrs-proxy
+
+networks:
+  webproxy-network:
+    external: true
+  monitoring-network:
+    external: true

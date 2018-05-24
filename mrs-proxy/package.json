@@ -1,0 +1,21 @@
+{
+  "name": "mrs-proxy",
+  "version": "0.1.0",
+  "license": "MIT",
+  "scripts": {
+    "packaging:init": "chmod +x docker-packaging-config/*.sh && docker-packaging-config/init.sh",
+    "//": "-------------------------------------------------------------------",
+    "packaging:prepare": "docker-packaging/prepare.sh",
+    "packaging:image-build": "docker-packaging/image-build.sh",
+    "packaging:image-push": "docker-packaging/image-push.sh",
+    "packaging:service-deploy": "docker-packaging/service-deploy.sh",
+    "packaging:service-run": "docker-packaging/service-run.sh",
+    "///": "------------------------------------------------------------------",
+    "build:init": "rm -fr dist && mkdir -p dist/config && cp src/config/*.json dist/config/",
+    "build": "npm run build:init && tsc",
+    "lint": "tslint --project tsconfig.json ./src/**/*.ts || exit 1",
+    "test:unit": "npm run lint && NODE_ENV=dev jest --watch --coverage",
+    "////": "-----------------------------------------------------------------"
+  },
+  "private": true
+}

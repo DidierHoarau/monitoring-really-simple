@@ -7,15 +7,11 @@ services:
       context: .
       dockerfile: Dockerfile
     image: ${DOCKER_REGISTRY}/mrs-web
-    labels:
-      - "discovery.service.name=example.com"
-      - "discovery.service.port=80"
-      - "discovery.service.https=y"
     networks:
-      - webproxy-network
-    ports:
-      - 80
+      monitoring-network:
+        aliases:
+          - mrs-web
 
 networks:
-  webproxy-network:
+  monitoring-network:
     external: true

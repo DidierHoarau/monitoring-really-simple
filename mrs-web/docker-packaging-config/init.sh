@@ -6,3 +6,7 @@ if [ "$npm_package_name" == "" ]; then
 fi
 
 set -e
+
+rm -fr ./docker-packaging
+
+cp -R ../docker-packaging .
