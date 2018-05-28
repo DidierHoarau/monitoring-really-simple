@@ -13,7 +13,7 @@ services:
       - "docker-backup.name=mrs-events"
       - "docker-backup.max-age=43200000"
       - "docker-backup.command=/opt/scripts/couchdb-backup-wrapper.sh"
-      - "docker-backup.file=/opt/backups/mrs.json"
+      - "docker-backup.file=/opt/backups/mrs-events.json"
     networks:
       monitoring-network:
         aliases:
