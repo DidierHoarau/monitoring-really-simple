@@ -6,9 +6,9 @@ import { ExpressWrapper } from './utils/express-wrapper';
 export const eventsGetRouter = ExpressWrapper.createRouter();
 
 eventsGetRouter.get('/', async (req: Request, res: Response, next: NextFunction) => {
-  await EventsDb.getEvents(100)
+  await EventsDb.getEvents()
     .then(events => {
-      res.status(200).send({ events, limit: 100 });
+      res.status(200).send({ events });
     })
     .catch(error => {
       Logger.error(error);

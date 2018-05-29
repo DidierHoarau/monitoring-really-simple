@@ -29,15 +29,15 @@ export class EventsDb {
     });
   }
 
-  public static getEvents(limit: number): Promise<any> {
+  public static getEvents(): Promise<any> {
     return new Promise((resolve, reject) => {
-      db.list({ include_docs: true, limit, sort: [{ date: 'desc' }] }, (error, body) => {
+      db.list({ include_docs: true, sort: [{ date: 'desc' }] }, (error, body) => {
         if (error) {
           reject(error);
         } else {
           const eventsResult = [];
-          for (const event of body.rows) {
-            eventsResult.push(event.doc);
+          for (let i = 0; i < body.rows.length; i++) {
+            eventsResult.push(body.rows[body.rows.length - i - 1].doc);
           }
           resolve(eventsResult);
         }
