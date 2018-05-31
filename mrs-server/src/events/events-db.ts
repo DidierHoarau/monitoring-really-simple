@@ -17,13 +17,15 @@ const db = nano.db.use('mrs-events');
 
 export class EventsDb {
   //
-  public static addEvent(event: MonitoringEvent): Promise<void> {
+  public static addEvent(event: MonitoringEvent): Promise<string> {
     return new Promise((resolve, reject) => {
-      db.insert(EventsDb.convertToDbFormat(event), EventsDb.generateDbId(event), error => {
+      const id = EventsDb.generateDbId(event);
+      event.id = id;
+      db.insert(EventsDb.convertToDbFormat(event), id, error => {
         if (error) {
           reject(error);
         } else {
-          resolve();
+          resolve(id);
         }
       });
     });
@@ -45,6 +47,16 @@ export class EventsDb {
     });
   }
 
+  public static listen(callback: any, since: number | Date = 0): void {
+    const feed = db.follow({ since });
+    feed.on('change', change => {
+      db.get(change.id, (err, body) => {
+        callback(err, body, change.id);
+      });
+    });
+    feed.follow();
+  }
+
   private static generateDbId(event: MonitoringEvent): string {
     return `${event.origin}-${event.date.toISOString()}-${Math.floor(Math.random() * 8999) + 1000}`;
   }
@@ -53,9 +65,11 @@ export class EventsDb {
     return {
       content: event.content,
       date: event.date,
+      id: event.id,
       level: event.level,
       origin: event.origin,
-      tags: event.tags
+      tags: event.tags,
+      topic: event.topic
     };
   }
 }

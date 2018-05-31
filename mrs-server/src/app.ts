@@ -2,6 +2,7 @@ import * as bodyParser from 'body-parser';
 import { NextFunction, Request, Response, Router } from 'express';
 import * as url from 'url';
 import { config } from './config';
+import { EventsNoAck } from './events/events-no-ack';
 import { router } from './router';
 import { ExpressWrapper } from './router/utils/express-wrapper';
 import { Logger } from './utils/logger';
@@ -9,6 +10,8 @@ import { Logger } from './utils/logger';
 const LOGTAG = '[app]';
 
 Logger.info(`${LOGTAG} ====== Starting Monitoring Really Simple Server ======`);
+
+EventsNoAck.init();
 
 const api = ExpressWrapper.createApi();
 const PORT = 3000;

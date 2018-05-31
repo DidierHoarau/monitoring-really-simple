@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response, Router } from 'express';
+import { EventsDb } from '../events/events-db';
 import { MonitoringEvent } from '../models/monitoring-event';
-import { EventsDb } from '../utils/events-db';
 import { Logger } from '../utils/logger';
 import { ExpressWrapper } from './utils/express-wrapper';
 
@@ -19,8 +19,8 @@ eventsPostRouter.post('/', async (req: Request, res: Response, next: NextFunctio
         throw new Error('Missing: origin');
       }
       const event = new MonitoringEvent(req.body);
-      await EventsDb.addEvent(event);
-      res.status(201).send({});
+      const id = await EventsDb.addEvent(event);
+      res.status(201).send({ id });
     })
     .catch(error => {
       Logger.warn(error);

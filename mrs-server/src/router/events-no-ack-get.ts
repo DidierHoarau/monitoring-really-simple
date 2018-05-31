@@ -1,12 +1,12 @@
 import { NextFunction, Request, Response, Router } from 'express';
-import { EventsDb } from '../utils/events-db';
+import { EventsNoAck } from '../events/events-no-ack';
 import { Logger } from '../utils/logger';
 import { ExpressWrapper } from './utils/express-wrapper';
 
-export const eventsGetRouter = ExpressWrapper.createRouter();
+export const eventsNoAckGetRouter = ExpressWrapper.createRouter();
 
-eventsGetRouter.get('/', async (req: Request, res: Response, next: NextFunction) => {
-  await EventsDb.getEvents()
+eventsNoAckGetRouter.get('/no-ack', async (req: Request, res: Response, next: NextFunction) => {
+  await EventsNoAck.list()
     .then(events => {
       res.status(200).send({ events });
     })
