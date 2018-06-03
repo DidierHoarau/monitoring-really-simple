@@ -3,10 +3,11 @@
     <div class="text-right">
       <a class="button tiny secondary" href="#" v-on:click="listEvents()">Refresh</a>
     </div>
-    <div v-if="mrsEvents.length == 0">
-      <div class="callout secondary">
-        <h5>No event found</h5>
-      </div>
+    <div v-if="!hasErrors && mrsEvents.length == 0" class="callout secondary">
+      <h5>No event found</h5>
+    </div>
+    <div v-if="hasErrors" class="callout alert">
+      <h5>Error getting events</h5>
     </div>
     <div v-for="event in mrsEvents">
       <div class="callout">
@@ -34,15 +35,21 @@ import { MrsServer } from '../services/MrsServer';
 @Component
 export default class EventList extends Vue {
   private mrsEvents: any[] = [];
+  private hasErrors: boolean = false;
 
   public created(): void {
     this.listEvents();
   }
 
   public listEvents() {
-    MrsServer.getEventsNoAck().then(events => {
-      this.mrsEvents = events.data.events;
-    });
+    this.hasErrors = false;
+    MrsServer.getEventsNoAck()
+      .then(events => {
+        this.mrsEvents = events.data.events;
+      })
+      .catch(error => {
+        this.hasErrors = true;
+      });
   }
 
   public formatDate(dateString: string): string {
