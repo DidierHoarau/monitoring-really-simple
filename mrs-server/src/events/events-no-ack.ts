@@ -14,6 +14,7 @@ export class EventsNoAck {
   //
   public static init(): void {
     eventsNoAckList = [];
+    eventsPostponedProcessing = [];
     logger.info(`Listening for Events`);
 
     EventsDb.listen((error, body, id) => {
@@ -43,13 +44,6 @@ export class EventsNoAck {
 }
 
 function processEvent(event: MonitoringEvent, id: string): void {
-  if (event.content.id === 'easysubtitles-translations-2018-06-01T00:24:24.584Z-2216') {
-    logger.debug(`${event.topic} ${event.id}`);
-  }
-  if (event.id === 'easysubtitles-translations-2018-06-01T00:24:24.584Z-2216') {
-    logger.debug(`${event.topic} ${event.id}`);
-    console.log(event);
-  }
   switch (event.topic) {
     case MonitoringEvent.TOPIC_EVENT_CREATE: {
       // logger.debug(`${event.topic} ${event.id}`);
@@ -74,7 +68,7 @@ function processEvent(event: MonitoringEvent, id: string): void {
   }
 }
 
-function indexInNoAckArray(id: string) {
+function indexInNoAckArray(id: string): number {
   for (let i = 0; i < eventsNoAckList.length; i++) {
     if (eventsNoAckList[i].id === id) {
       return i;
@@ -83,7 +77,7 @@ function indexInNoAckArray(id: string) {
   return -1;
 }
 
-function indexInPendingArray(id: string) {
+function indexInPendingArray(id: string): number {
   for (let i = 0; i < eventsPostponedProcessing.length; i++) {
     if (eventsPostponedProcessing[i].content.id === id) {
       return i;
