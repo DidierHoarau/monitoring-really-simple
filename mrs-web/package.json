@@ -11,10 +11,12 @@
     "packaging:service-deploy": "docker-packaging/service-deploy.sh",
     "packaging:service-run": "docker-packaging/service-run.sh",
     "///": "-- Dev -----------------------------------------------------------",
-    "serve": "vue-cli-service serve",
+    "serve": "vue-cli-service serve --port 80",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "test:unit": "vue-cli-service test:unit"
+    "test:unit": "vue-cli-service test:unit",
+    "////": "-----------------------------------------------------------------",
+    "dev:docker": "docker-packaging-config/start-dev-docker.sh || true"
   },
   "dependencies": {
     "axios": "^0.18.0",
@@ -27,6 +29,7 @@
   },
   "devDependencies": {
     "@types/jest": "^22.0.1",
+    "@vue/cli": "^3.0.0-beta.15",
     "@vue/cli-plugin-babel": "^3.0.0-beta.11",
     "@vue/cli-plugin-pwa": "^3.0.0-beta.11",
     "@vue/cli-plugin-typescript": "^3.0.0-beta.11",

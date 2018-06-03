@@ -36,7 +36,3 @@ MRS will work just fine without the last 2 repositories.
 # Extensibility
 
 The main goal is to keep the core services of the project to be light and fast to deploy. Extensibility will however be taken into account and should be implemented in optional services that users would choose to deploy or not depending of their needs.
-
-# Maturity
-
-This project is at a very early development stage. It is not yet suitable for production.

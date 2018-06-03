@@ -1,6 +1,9 @@
 import { config } from '../config';
-import { HttpTools } from '../utils/http-tools';
-import { Timeout } from '../utils/timeout';
+import { HttpTools } from '../utils-std-ts/http-tools';
+import { Timeout } from '../utils-std-ts/timeout';
+import { TestCommon } from './test-common';
+
+const headers = TestCommon.getHeaders();
 
 describe('[API] Acknowldedge Events', () => {
   //
@@ -13,16 +16,16 @@ describe('[API] Acknowldedge Events', () => {
       tags: ['test']
     };
     await Timeout.wait(100);
-    const response = await HttpTools.post({ json, url });
+    const response = await HttpTools.post({ headers, json, url });
     expect(response).toHaveProperty('id');
     await Timeout.wait(100);
     url = `http://localhost:3000${config.API_PATH}/events/no-ack`;
-    const nbNoAckBefore = (await HttpTools.get({ json: true, url })).events.length;
+    const nbNoAckBefore = (await HttpTools.get({ headers, json: true, url })).events.length;
     url = `http://localhost:3000${config.API_PATH}/events/${response.id}/ack`;
-    await HttpTools.post({ json: {}, url });
+    await HttpTools.post({ headers, json: {}, url });
     await Timeout.wait(100);
     url = `http://localhost:3000${config.API_PATH}/events/no-ack`;
-    const nbNoAckAfter = (await HttpTools.get({ json: true, url })).events.length;
+    const nbNoAckAfter = (await HttpTools.get({ headers, json: true, url })).events.length;
     expect(nbNoAckAfter).toEqual(nbNoAckBefore - 1);
   });
 });

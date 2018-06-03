@@ -1,6 +1,9 @@
 import { config } from '../config';
-import { HttpTools } from '../utils/http-tools';
-import { Timeout } from '../utils/timeout';
+import { HttpTools } from '../utils-std-ts/http-tools';
+import { Timeout } from '../utils-std-ts/timeout';
+import { TestCommon } from './test-common';
+
+const headers = TestCommon.getHeaders();
 
 describe('[API] Post Events', () => {
   //
@@ -13,7 +16,7 @@ describe('[API] Post Events', () => {
       tags: ['test']
     };
     await Timeout.wait(100);
-    await HttpTools.post({ json, url });
+    await HttpTools.post({ headers, json, url });
   });
 
   test('should reject an event without the required field', async done => {
@@ -25,7 +28,7 @@ describe('[API] Post Events', () => {
       wrongcontent: { a: 'b', c: 'd' }
     };
     await Timeout.wait(100);
-    await HttpTools.post({ json, url })
+    await HttpTools.post({ headers, json, url })
       .then(() => {
         done(new Error('should have failed'));
       })

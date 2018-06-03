@@ -13,6 +13,14 @@ services:
           - mrs-server
     environment:
       - API_TOKEN=change_me
+    ports:
+      - 3000
+    volumes:
+      - ./start-cmd-dev.sh:/start-cmd.sh
+      - ../src:/opt/app/src
+      - ../package.json:/opt/app/package.json
+      - ../package-lock.json:/opt/app/package-lock.json
+      - ../tsconfig.json:/opt/app/tsconfig.json
 
 networks:
   monitoring-network:

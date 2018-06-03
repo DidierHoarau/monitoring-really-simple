@@ -2,17 +2,17 @@ version: '3'
 
 services:
 
-  server:
+  nginx:
     build:
       context: .
       dockerfile: Dockerfile
-    image: ${DOCKER_REGISTRY}/mrs-server
+    image: ${DOCKER_REGISTRY}/mrs-proxy
+    ports:
+      - 80:80
     networks:
       monitoring-network:
         aliases:
-          - mrs-server
-    environment:
-      - API_TOKEN=change_me
+          - mrs-proxy
 
 networks:
   monitoring-network:

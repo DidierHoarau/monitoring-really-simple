@@ -17,7 +17,6 @@
     "camelcase": ["error", {properties: "never"}],
     "max-len": [1, 100, 2],
     "quotes": ["error", "single"],
-    "sort-imports": ["warn", { "ignoreMemberSort": true }],
-    "comma-dangle": ["error", "always"]
+    "sort-imports": ["warn", { "ignoreMemberSort": true }]
   }
 }

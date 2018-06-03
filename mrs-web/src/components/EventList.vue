@@ -33,8 +33,6 @@ import { MrsServer } from '../services/MrsServer';
 
 @Component
 export default class EventList extends Vue {
-  @Prop() private msg!: string;
-
   private mrsEvents: any[] = [];
 
   public created(): void {

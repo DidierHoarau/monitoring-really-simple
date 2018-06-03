@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile-dev
+    image: ${DOCKER_REGISTRY}/mrs-web
+    networks:
+      monitoring-network:
+        aliases:
+          - mrs-web
+    ports:
+      - 80
+    volumes:
+      - ../src:/opt/app/src
+      - ../public:/opt/app/public
+      - ../babel.config.js:/opt/app/babel.config.js
+      - ../package.json:/opt/app/package.json
+      - ../package-lock.json:/opt/app/package-lock.json
+      - ../tsconfig.json:/opt/app/tsconfig.json
+
+networks:
+  monitoring-network:
+    external: true

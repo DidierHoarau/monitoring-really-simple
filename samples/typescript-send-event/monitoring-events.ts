@@ -2,13 +2,16 @@ import * as request from 'request';
 
 export class MonitoringEvents {
   //
-  public static send(json: IMonitoringEvent, server?: string): Promise<void> {
+  public static send(json: IMonitoringEvent, server: string, apiToken: string): Promise<void> {
     if (!server) {
       server = 'http://mrs-proxy';
     }
+    const headers = {
+      Authorization: apiToken,
+    };
     const url = `${server}/api/events/`;
     return new Promise((resolve, reject) => {
-      request.post({ url, json }, (error, response) => {
+      request.post({ headers, json, url }, (error, response) => {
         if (error) {
           reject(error);
         } else {
@@ -34,5 +37,5 @@ export enum MonitoringLevel {
   error = 'error',
   warn = 'warn',
   info = 'info',
-  functional = 'functional'
+  functional = 'functional',
 }

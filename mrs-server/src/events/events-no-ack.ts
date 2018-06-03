@@ -1,8 +1,10 @@
 import * as _ from 'lodash';
 import { config } from '../config/';
 import { MonitoringEvent } from '../models/monitoring-event';
-import { Logger } from '../utils/logger';
+import { Logger } from '../utils-std-ts/logger';
 import { EventsDb } from './events-db';
+
+const logger = new Logger('events-db');
 
 const LOGTAG = '[events-no-ack]';
 let eventsNoAckList: MonitoringEvent[] = [];
@@ -11,22 +13,22 @@ export class EventsNoAck {
   //
   public static init(): void {
     eventsNoAckList = [];
-    Logger.info(`${LOGTAG} Listening for Events`);
+    logger.info(`Listening for Events`);
     EventsDb.listen((error, body, id) => {
       const event: MonitoringEvent = new MonitoringEvent(body);
       event.id = id;
       if (error) {
-        return Logger.error(`${LOGTAG} ${error}`);
+        return logger.error(error);
       }
       //
       switch (event.topic) {
         case MonitoringEvent.TOPIC_EVENT_CREATE: {
           eventsNoAckList.push(event);
-          Logger.debug(`${LOGTAG} ${event.topic} ${event.id}`);
+          logger.debug(`${event.topic} ${event.id}`);
           break;
         }
         case MonitoringEvent.TOPIC_EVENT_ACK: {
-          Logger.debug(`${LOGTAG} ${event.topic} ${event.content.id}`);
+          logger.debug(`${event.topic} ${event.content.id}`);
           for (let i = 0; i < eventsNoAckList.length; i++) {
             if (eventsNoAckList[i].id === event.content.id) {
               eventsNoAckList.splice(i, 1);

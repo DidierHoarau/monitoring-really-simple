@@ -23,6 +23,13 @@ npm run packaging:image-build dev
 npm run packaging:image-push dev
 npm run packaging:service-deploy dev
 
+cd ${DIR}/../mrs-proxy
+npm run packaging:init
+npm run packaging:prepare
+npm run packaging:image-build dev
+npm run packaging:image-push dev
+npm run packaging:service-deploy dev
+
 cd ../mrs-server
 npm install
-npm run run:watch
+npm run dev:docker

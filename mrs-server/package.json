@@ -17,7 +17,8 @@
     "lint": "tslint --project tsconfig.json ./src/**/*.ts || exit 1",
     "test:unit": "npm run lint && NODE_ENV=dev jest --watch --coverage",
     "////": "-----------------------------------------------------------------",
-    "run:watch": "npm run build && NODE_ENV=dev concurrently --kill-others \"tsc -w\" \"nodemon dist/app.js\"",
+    "dev": "npm run build && NODE_ENV=dev concurrently --kill-others \"tsc -w\" \"nodemon dist/app.js\"",
+    "dev:docker": "docker-packaging-config/start-dev-docker.sh || true",
     "test:watch:coverage": "NODE_ENV=dev jest --watch --coverage",
     "test:watch": "NODE_ENV=dev jest --watch"
   },

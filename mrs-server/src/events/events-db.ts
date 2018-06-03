@@ -2,7 +2,6 @@ import * as _ from 'lodash';
 import * as Nano from 'nano';
 import { config } from '../config/';
 import { MonitoringEvent } from '../models/monitoring-event';
-import * as logger from '../utils/logger';
 
 const nano = Nano({
   requestDefaults: {
